@@ -11,6 +11,9 @@
     "scripts/cm.js","scripts/cm-classes.js"
   ],
   "packs": [],
+    "url": "https://github.com/Yosoy-Ed/critic-message",
+  "manifest": "https://github.com/Yosoy-Ed/critic-message/releases/download/0.1.0/module.json",
+  "download": "https://github.com/Yosoy-Ed/critic-message/releases/download/0.1.0/module.zip",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
