@@ -2,17 +2,18 @@
 
 This foundryvtt module allows you to set custom images and text to be shown in the chat when someone rolls a Nat1 or Nat20. Idea was inspired by the module [sadness-chan](https://foundryvtt.com/packages/sadness-chan), I didn't like it how the message looks and the way selecting images where done. I used some of the lines in that module for the default here. 
 
+Default view:
 
-<table>
-<tr>
-<td><img src="https://github.com/Yosoy-Ed/critic-message/assets/19942461/610367f4-9108-4e72-b2d4-e31b93d45523" ></td>
-<td><img src="https://github.com/Yosoy-Ed/critic-message/assets/19942461/e5cc4128-b81f-4ce1-a20c-f352da1eb56a" ></td>
-</tr>
-<tr>
-<td><img src="https://github.com/Yosoy-Ed/critic-message/assets/19942461/8168b214-7685-404c-b1f5-de038be5273f" ></td>
-<td><img src="https://github.com/Yosoy-Ed/critic-message/assets/19942461/a182272b-b24e-4d56-8c6b-e11dcc630b76" ></td>
-</tr>
-</table>
+![Image](https://github.com/Yosoy-Ed/critic-message/assets/19942461/6d494dfe-8b5d-4c9d-8530-2e2a942f0c4f )
+![Image](https://github.com/Yosoy-Ed/critic-message/assets/19942461/bc8b3206-d9e4-48e7-927a-a7d9fd927645)
+
+
+I like to use [Chat portraits](https://foundryvtt.com/packages/chat-portrait ) module and it looks litke this:
+
+
+
+![Image](https://github.com/Yosoy-Ed/critic-message/assets/19942461/8168b214-7685-404c-b1f5-de038be5273f)
+![Image](https://github.com/Yosoy-Ed/critic-message/assets/19942461/610367f4-9108-4e72-b2d4-e31b93d45523)
 
 
 Settings are only available to GM
