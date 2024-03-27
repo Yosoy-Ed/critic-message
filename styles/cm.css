@@ -1,0 +1,41 @@
+.custom-image-size {
+    border: none;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.image-cell {
+    width: 100px;
+    height: 100px;
+}
+
+.rline {
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    overflow: auto;
+}
+
+.titleline {
+    text-align: center;
+    text-decoration: underline;
+    text-transform: uppercase;
+    font-weight: bold;
+    overflow: auto;
+}
+
+.formtitle {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.reset-button {
+    font-weight: bold;
+
+}
