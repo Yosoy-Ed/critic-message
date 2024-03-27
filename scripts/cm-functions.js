@@ -63,7 +63,7 @@ export function criticalmessage(d20dices, userwhorolled) {
 
 
                 let themessage = `
-              <table>
+              <table class="chatable">
                   <tbody>
                       <tr>
                           <td colspan="2" class="titleline"><br>${userwhorolled} ROLLED A NATURAL ${diceresult}!</td>
