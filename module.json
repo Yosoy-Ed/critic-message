@@ -2,8 +2,8 @@
   "id": "critic-message",
   "title": "Critical Message",
   "description": "A module that sends a message when a natural 1 or natural 20 is rolled.",
-  "authors": [{"name": "YosoyEd"}],
-  "version": "1.0.0",
+  "authors": [{"name": "Yosoy-Ed"}],
+  "version": "0.1.0",
   "styles": [
     "styles/cm.css"
   ],
