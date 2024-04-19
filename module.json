@@ -12,8 +12,8 @@
   ],
   "packs": [],
     "url": "https://github.com/Yosoy-Ed/critic-message",
-  "manifest": "https://github.com/Yosoy-Ed/critic-message/releases/download/v0.1.0/module.json",
-  "download": "https://github.com/Yosoy-Ed/critic-message/releases/download/v0.1.0/module.zip",
+  "manifest": "https://github.com/Yosoy-Ed/critic-message/releases/download/v0.1.1/module.json",
+  "download": "https://github.com/Yosoy-Ed/critic-message/releases/download/v0.1.1/module.zip",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
