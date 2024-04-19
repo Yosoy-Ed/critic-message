@@ -86,3 +86,49 @@ export function criticalmessage(d20dices, userwhorolled) {
         }
     });
 }
+
+export function detectroll(chatMessage) {
+
+    // If the current user is not the one who rolled the dice, do nothing
+    if (chatMessage.user._id !== game.user._id) {
+        return;
+    }
+
+    let rolltype = 0; // 0-Public, 1-Blind , 2-PrivateGM, 3-Self
+
+    // If the roll is not public it is whisper 
+    if (chatMessage.whisper.length !== 0) {
+
+        let whisperdto = chatMessage.whisper;
+        let gmids = game.users.contents.filter(user => user.isGM).map(gm => gm.id);
+
+        // The roll is blind
+        if (chatMessage.blind) {
+            rolltype = 1; // Blind Roll 
+        } else {
+            //The roll was whispered to the GM      
+            if(whisperdto.length === gmids.length){
+    
+                const a1fus = whisperdto.sort().join('');
+                const a2fus = gmids.sort().join('');
+                
+                if (a1fus === a2fus){
+                    rolltype = 2; //Private GM
+                }
+            }
+            //The roll was whispered to himself
+            if (chatMessage.whisper[0] === chatMessage.user._id && chatMessage.whisper.length === 1) {
+                rolltype = 3; // selfRoll
+            }
+        }
+    }
+
+    if (rolltype !== 0 && !game.settings.get('critic-message', 'allowhiddenrolls')) {
+        return;
+    }
+
+    let d20dices = chatMessage.rolls[0].dice;
+    let userwhorolled = chatMessage.user.name;
+    verifyimgfolders();
+    criticalmessage(d20dices, userwhorolled);
+}

@@ -1,8 +1,8 @@
 import { Updatetxtarraysn1, Updatetxtarraysn20, ResetButton, ResetButton1, ResetButtonAll } from './cm-classes.js';
-import { verifyimgfolders, criticalmessage } from './cm-functions.js';
+import { verifyimgfolders, criticalmessage, detectroll } from './cm-functions.js';
 
 
-/************************************************** CHAT DICE HOOKS ***********/
+/************************************************** CHAT DICE HOOKS ***********
 // If dice so nice is not active    
 Hooks.on("createChatMessage", (chatMessage) => {
     if (!game.modules.get("dice-so-nice")?.active) {
@@ -33,8 +33,62 @@ Hooks.on('diceSoNiceRollComplete', (data) => {
     }
 });
 
-/* **************************** INIT SETTINGS ************************************ */
+
+/************************************************** CHAT DICE HOOKS ***********/
+// If dice so nice is not active    
+Hooks.on("createChatMessage", (chatMessage) => {
+
+    if (game.modules.get("dice-so-nice")?.active){ //If dice so nice is active but the roll is blind and ghost dice is not enabled
+        if(!game.settings.get("dice-so-nice", "showGhostDice") && chatMessage.blind && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll){
+
+            detectroll(chatMessage);            
+        }
+    }
+
+    if (!game.modules.get("dice-so-nice")?.active && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll ) { 
+
+        detectroll(chatMessage);
+    }
+
+});
+
+// If dice so nice is active wait for animation to finish
+Hooks.on('diceSoNiceRollComplete', (data) => {
+
+    let chatMessage = game.messages.get(data);
+
+     if (game.settings.get('critic-message', 'disablemodule') || (chatMessage.blind && !game.settings.get("dice-so-nice", "showGhostDice"))) {// if the roll is blind it was registered like dice so nice is not installed and evaluated before
+        return;
+    } 
+
+    detectroll(chatMessage);
+});
+/****************************************************************************** */
+
+ /***************************** INIT SETTINGS ************************************ */
 Hooks.once('init', function () {
+
+    //Option to stop detecting Natural dices
+    game.settings.register('critic-message', 'disablemodule', {
+        name: 'disable module',
+        hint: 'While this is enabled, critical messages will not be shown',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: false,
+        restricted: true
+    });
+
+    //Avoid showing data if not selected
+    game.settings.register('critic-message', 'allowhiddenrolls', {
+        name: 'Allow to show message on hidden rolls',
+        hint: 'MESSAGES WILL APPEAR ONLY WITH PUBLIC ROLLS.',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        restricted: true
+    });
 
     // RESET  ALL SETTINGS TO DEFAULT
     game.settings.registerMenu('critic-message', 'reset-all-button', {
