@@ -45,7 +45,15 @@
 }
 
 .chatable {
+    background-image: none;
+    background-color: transparent;
     border: none;
     border-collapse: collapse;
     margin: 0px;
+}
+
+.chatable tr, .chatable td {
+    background: none;
+    background-image: none;
+    background-color: transparent;
 }

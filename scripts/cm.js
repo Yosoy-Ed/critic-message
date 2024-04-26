@@ -245,14 +245,17 @@ Hooks.once('init', function () {
 });
 
 Hooks.once('ready', function () {
+
+    if (game.user.isGM) {
     verifyimgfolders();
-}
-);
+    }
+});
 
 Hooks.on('closeSettingsConfig', function () {
+    if (game.user.isGM) {
     verifyimgfolders();
-}
-);
+    }
+});
 
 /* 
 To reset a variable:

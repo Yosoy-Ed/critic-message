@@ -129,6 +129,8 @@ export function detectroll(chatMessage) {
 
     let d20dices = chatMessage.rolls[0].dice;
     let userwhorolled = chatMessage.user.name;
+    if (game.user.isGM) {
     verifyimgfolders();
+    }
     criticalmessage(d20dices, userwhorolled);
 }
