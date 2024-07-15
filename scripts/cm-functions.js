@@ -14,7 +14,7 @@ export function verifyimgfolders() {
     });
 }
 /***************************** SEND TO CHAT FUNCTION ************************/
-export function criticalmessage(d20dices, userwhorolled) {
+export function criticalmessage(d20dices, userwhorolled,isAttack) {
 
     d20dices.forEach((element) => {
         if (element.faces === 20) {
@@ -27,7 +27,9 @@ export function criticalmessage(d20dices, userwhorolled) {
 
                 if (diceresult === 1) {
 
-                    allines = game.settings.get('critic-message', 'ntext');
+                    allines = isAttack ? game.settings.get('critic-message', 'ntext-attack') : game.settings.get('critic-message', 'ntext');
+
+                    //allines = game.settings.get('critic-message', 'ntext');
 
                     if (!game.settings.get('critic-message', 'nat1Checkbox')) {
                         img2show = game.settings.get('critic-message', 'nimage');
@@ -39,7 +41,10 @@ export function criticalmessage(d20dices, userwhorolled) {
                 }
                 else if (diceresult === 20) {
 
-                    allines = game.settings.get('critic-message', 'ptext');
+                    allines = isAttack ? game.settings.get('critic-message', 'ptext-attack') : game.settings.get('critic-message', 'ptext');
+
+                    //allines = game.settings.get('critic-message', 'ptext');
+                    
                     if (!game.settings.get('critic-message', 'nat20Checkbox')) {
                         img2show = game.settings.get('critic-message', 'pimage');
                     }
@@ -68,7 +73,7 @@ export function criticalmessage(d20dices, userwhorolled) {
                       <tr>
                           <td colspan="2" class="titleline"><br>${userwhorolled} ROLLED A NATURAL ${diceresult}!</td>
                       </tr>
-                      <tr>
+                      <tr id="msg-bg">
                           <td colspan="1" class="image-cell"><img class="custom-image-size" src="${img2show}"></td>
                           <td colspan="1" class="rline">${randomLine}</td>
                       </tr>
@@ -90,8 +95,14 @@ export function criticalmessage(d20dices, userwhorolled) {
 export function detectroll(chatMessage) {
 
     // If the current user is not the one who rolled the dice, do nothing
-    if (chatMessage.user._id !== game.user._id) {
+    if (chatMessage.author._id !== game.user._id) {
         return;
+    }
+
+    let isAttack = false;
+
+    if (chatMessage.rolls[0]['type'] === 'attack-roll') {
+        isAttack = true;
     }
 
     let rolltype = 0; // 0-Public, 1-Blind , 2-PrivateGM, 3-Self
@@ -117,7 +128,7 @@ export function detectroll(chatMessage) {
                 }
             }
             //The roll was whispered to himself
-            if (chatMessage.whisper[0] === chatMessage.user._id && chatMessage.whisper.length === 1) {
+            if (chatMessage.whisper[0] === chatMessage.author._id && chatMessage.whisper.length === 1) {
                 rolltype = 3; // selfRoll
             }
         }
@@ -128,9 +139,9 @@ export function detectroll(chatMessage) {
     }
 
     let d20dices = chatMessage.rolls[0].dice;
-    let userwhorolled = chatMessage.user.name;
+    let userwhorolled = chatMessage.author.name;
     if (game.user.isGM) {
     verifyimgfolders();
     }
-    criticalmessage(d20dices, userwhorolled);
+    criticalmessage(d20dices, userwhorolled,isAttack);
 }

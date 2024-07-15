@@ -1,39 +1,6 @@
 import { Updatetxtarraysn1, Updatetxtarraysn20, ResetButton, ResetButton1, ResetButtonAll } from './cm-classes.js';
 import { verifyimgfolders, criticalmessage, detectroll } from './cm-functions.js';
 
-
-/************************************************** CHAT DICE HOOKS ***********
-// If dice so nice is not active    
-Hooks.on("createChatMessage", (chatMessage) => {
-    if (!game.modules.get("dice-so-nice")?.active) {
-
-        if (!chatMessage.rolls[0]) {
-            return;
-        }
-        if ((chatMessage.user._id == game.user._id)) {
-            let d20dices = chatMessage.rolls[0].dice;
-            let userwhorolled = chatMessage.user.name;
-            verifyimgfolders();
-            criticalmessage(d20dices, userwhorolled);
-        }
-    }
-});
-
-// If dice so nice is active
-Hooks.on('diceSoNiceRollComplete', (data) => {
-
-    let rchatMessage = game.messages.get(data);
-
-    // If the current user is not the one who rolled the dice, do nothing
-    if (rchatMessage.user._id == game.user._id) {
-        let d20dices = rchatMessage.rolls[0].dice;
-        let userwhorolled = rchatMessage.user.name;
-        verifyimgfolders();
-        criticalmessage(d20dices, userwhorolled);
-    }
-});
-
-
 /************************************************** CHAT DICE HOOKS ***********/
 // If dice so nice is not active    
 Hooks.on("createChatMessage", (chatMessage) => {
@@ -191,7 +158,17 @@ Hooks.once('init', function () {
         restricted: true // Restrict this submenu to gamemaster only?
     });
 
-    //Natural 1 list variable
+    //Natural 1 list variables
+    game.settings.register('critic-message', 'ntext-attack', {
+        scope: 'world', // This specifies a world-level setting
+        config: false, // This setting should not appear in the settings menu
+        default: "Your attempt is impressive. The enemy claps politely.\nOverconfidence leads to an embarrassing miss.\nPlease, dont cry, you might go better next time...\nYour enemy looks at you confused, trying to understand what the hell you were trying to do.\nThe only thing getting hurt today is your pride...\nThat attack was so bad, even the bard is speechless...\nThe enemy sighs dramatically. 'Is that really the best you can do?\nTell the poor monster you are sorry for wasting its time\nSeriously?", // The default value for the setting
+        type: String,
+        onChange: value => {
+            console.log(value);
+        }
+    });
+
     game.settings.register('critic-message', 'ntext', {
         scope: 'world', // This specifies a world-level setting
         config: false, // This setting should not appear in the settings menu
@@ -212,7 +189,16 @@ Hooks.once('init', function () {
         restricted: true // Restrict this submenu to gamemaster only?
     });
 
-    //Natural 20 list variable
+    //Natural 20 list variables
+    game.settings.register('critic-message', 'ptext-attack', {
+        scope: 'world', // This specifies a world-level setting
+        config: false, // This setting should not appear in the settings menu
+        default: "That really hurts!\nOuch! That’s gonna leave a mark!\nThe poor thing won’t be sitting comfortably anytime soon.\nSurprise! The enemy didn’t see that coming.\nHold on, let me take a screenshot. This doesn't happen every day.\nCritical hit! The enemy regrets its life choices.\nYou just rearranged their internal organs. Congrats!\n${userwhorolled} has been banned for hacking", // The default value for the setting
+        type: String,
+        onChange: value => {
+            console.log(value);
+        }
+    });
     game.settings.register('critic-message', 'ptext', {
         scope: 'world', // This specifies a world-level setting
         config: false, // This setting should not appear in the settings menu

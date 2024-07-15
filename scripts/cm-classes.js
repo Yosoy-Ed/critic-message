@@ -12,20 +12,23 @@ export class Updatetxtarraysn1 extends FormApplication {
             closeOnSubmit: true,
             resizable: true
         }
-        return mergeObject(defaults, overrides);
+        return foundry.utils.mergeObject(defaults, overrides);
     }
 
     getData() {
         const ntl = game.settings.get('critic-message', 'ntext');
+        const ntlAtk = game.settings.get('critic-message', 'ntext-attack');
         return {
-            ntl: ntl,
             natdice: 1,
-            txtaname: "ntext"
+            ntl: ntl,            
+            txtaname: "ntext",
+            ntlAtk: ntlAtk,            
+            txtanameAtk: "ntext-attack"
         };
     }
 
     _updateObject(event, formData) {
-        const data = expandObject(formData);
+        const data = foundry.utils.expandObject(formData);
         game.settings.set('critic-message', 'ntext', data.ntext);
     }
 }
@@ -34,15 +37,18 @@ export class Updatetxtarraysn20 extends Updatetxtarraysn1 {
 
     getData() {
         const ntl = game.settings.get('critic-message', 'ptext');
+        const ntlAtk = game.settings.get('critic-message', 'ptext-attack');
         return {
-            ntl: ntl,
             natdice: 20,
-            txtaname: "ptext"
+            ntl: ntl,
+            txtaname: "ptext",
+            ntlAtk: ntlAtk,
+            txtanameAtk: "ptext-attack"
         };
     }
 
     _updateObject(event, formData) {
-        const data = expandObject(formData);
+        const data = foundry.utils.expandObject(formData);
         game.settings.set('critic-message', 'ptext', data.ptext);
     }
 }
@@ -58,7 +64,7 @@ export class ResetButton extends FormApplication {
             width: 400,
             closeOnSubmit: true
         }
-        return mergeObject(defaults, overrides);
+        return foundry.utils.mergeObject(defaults, overrides);
     }
 
     getData() {
@@ -97,7 +103,7 @@ export class ResetButtonAll extends FormApplication {
             width: 200,
             closeOnSubmit: true
         }
-        return mergeObject(defaults, overrides);
+        return foundry.utils.mergeObject(defaults, overrides);
     }
 
     getData() {
