@@ -23,13 +23,15 @@ export class Updatetxtarraysn1 extends FormApplication {
             ntl: ntl,            
             txtaname: "ntext",
             ntlAtk: ntlAtk,            
-            txtanameAtk: "ntext-attack"
+            txtanameAtk: "ntextattack"
         };
     }
 
     _updateObject(event, formData) {
         const data = foundry.utils.expandObject(formData);
+        console.log(data)
         game.settings.set('critic-message', 'ntext', data.ntext);
+        game.settings.set('critic-message', 'ntext-attack', data.ntextattack);
     }
 }
 /************************************UPDATE NATURAL 20 LIST FORM CLASS *********/
@@ -43,13 +45,14 @@ export class Updatetxtarraysn20 extends Updatetxtarraysn1 {
             ntl: ntl,
             txtaname: "ptext",
             ntlAtk: ntlAtk,
-            txtanameAtk: "ptext-attack"
+            txtanameAtk: "ptextattack"
         };
     }
 
     _updateObject(event, formData) {
         const data = foundry.utils.expandObject(formData);
         game.settings.set('critic-message', 'ptext', data.ptext);
+        game.settings.set('critic-message', 'ptext-attack', data.ptextattack);
     }
 }
 

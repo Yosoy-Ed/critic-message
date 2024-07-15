@@ -94,14 +94,22 @@ export function criticalmessage(d20dices, userwhorolled,isAttack) {
 
 export function detectroll(chatMessage) {
 
+    let gameSystem = game.system.id;
+    let foundryV11 = game.version < 12 ? true : false;
+    let msgId = game.version < 12 ? chatMessage.user._id : chatMessage.author._id;
+
     // If the current user is not the one who rolled the dice, do nothing
-    if (chatMessage.author._id !== game.user._id) {
+    if (msgId !== game.user._id) {
         return;
     }
 
     let isAttack = false;
 
-    if (chatMessage.rolls[0]['type'] === 'attack-roll') {
+    if (gameSystem === 'dnd5e' && chatMessage.rolls[0].options.flavor.includes('Attack')){
+        isAttack = true;        
+    }
+
+    if (gameSystem === 'pf2e' && chatMessage.rolls[0]['type'] === 'attack-roll') {
         isAttack = true;
     }
 
@@ -128,7 +136,7 @@ export function detectroll(chatMessage) {
                 }
             }
             //The roll was whispered to himself
-            if (chatMessage.whisper[0] === chatMessage.author._id && chatMessage.whisper.length === 1) {
+            if (chatMessage.whisper[0] === msgId && chatMessage.whisper.length === 1) {
                 rolltype = 3; // selfRoll
             }
         }
@@ -139,7 +147,8 @@ export function detectroll(chatMessage) {
     }
 
     let d20dices = chatMessage.rolls[0].dice;
-    let userwhorolled = chatMessage.author.name;
+    //let userwhorolled = chatMessage.author.name;
+    let userwhorolled = game.version < 12 ? chatMessage.user.name : chatMessage.author.name;
     if (game.user.isGM) {
     verifyimgfolders();
     }
