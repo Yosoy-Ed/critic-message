@@ -3,21 +3,17 @@ import { verifyimgfolders, criticalmessage, detectroll } from './cm-functions.js
 
 /************************************************** CHAT DICE HOOKS ***********/
 // If dice so nice is not active    
-Hooks.on("createChatMessage", (chatMessage) => {  
-   /* 
-    console.log('createChatMessage:')
-    console.log(chatMessage)
-    console.log(chatMessage.isRoll)
-*/
-    if (game.modules.get("dice-so-nice")?.active){ //If dice so nice is active but the roll is blind and ghost dice is not enabled
-        if(!game.settings.get("dice-so-nice", "showGhostDice") && chatMessage.blind && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll){
+Hooks.on("createChatMessage", (chatMessage) => {
 
-            detectroll(chatMessage);            
+    if (game.modules.get("dice-so-nice")?.active) { //If dice so nice is active but the roll is blind and ghost dice is not enabled
+        if (!game.settings.get("dice-so-nice", "showGhostDice") && chatMessage.blind && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll) {
+
+            detectroll(chatMessage);
         }
     }
 
-    if (!game.modules.get("dice-so-nice")?.active && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll ) { 
-        
+    if (!game.modules.get("dice-so-nice")?.active && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll) {
+
         detectroll(chatMessage);
     }
 
@@ -28,23 +24,26 @@ Hooks.on('diceSoNiceRollComplete', (data) => {
 
     let chatMessage = game.messages.get(data);
 
-     if (game.settings.get('critic-message', 'disablemodule') || (chatMessage.blind && !game.settings.get("dice-so-nice", "showGhostDice"))) {// if the roll is blind it was registered like dice so nice is not installed and evaluated before
+    if (game.settings.get('critic-message', 'disablemodule') || (chatMessage.blind && !game.settings.get("dice-so-nice", "showGhostDice"))) {// if the roll is blind it was registered like dice so nice is not installed and evaluated before
         return;
-    } 
+    }
 
     detectroll(chatMessage);
 });
 
+//MidiQOL Compatibility
+Hooks.on('midi-qol.RollComplete', (workflow) => {
 
-Hooks.on('midi-qol.postAttackRollComplete', (data) => {
+    let chatMessage = workflow.chatCard;
 
-    console.log(data);
-    //console.log(data.chatCard.rolls[0]);
-    detectroll(data.chatCard);
+    if (!game.settings.get('critic-message', 'disablemodule')) {
+
+        detectroll(chatMessage);
+    }
 });
 /****************************************************************************** */
 
- /***************************** INIT SETTINGS ************************************ */
+/***************************** INIT SETTINGS ************************************ */
 Hooks.once('init', function () {
 
     //Option to stop detecting Natural dices
@@ -245,13 +244,13 @@ Hooks.once('init', function () {
 Hooks.once('ready', function () {
 
     if (game.user.isGM) {
-    verifyimgfolders();
+        verifyimgfolders();
     }
 });
 
 Hooks.on('closeSettingsConfig', function () {
     if (game.user.isGM) {
-    verifyimgfolders();
+        verifyimgfolders();
     }
 });
 
