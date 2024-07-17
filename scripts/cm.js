@@ -3,8 +3,12 @@ import { verifyimgfolders, criticalmessage, detectroll } from './cm-functions.js
 
 /************************************************** CHAT DICE HOOKS ***********/
 // If dice so nice is not active    
-Hooks.on("createChatMessage", (chatMessage) => {
-
+Hooks.on("createChatMessage", (chatMessage) => {  
+   /* 
+    console.log('createChatMessage:')
+    console.log(chatMessage)
+    console.log(chatMessage.isRoll)
+*/
     if (game.modules.get("dice-so-nice")?.active){ //If dice so nice is active but the roll is blind and ghost dice is not enabled
         if(!game.settings.get("dice-so-nice", "showGhostDice") && chatMessage.blind && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll){
 
@@ -13,7 +17,7 @@ Hooks.on("createChatMessage", (chatMessage) => {
     }
 
     if (!game.modules.get("dice-so-nice")?.active && !game.settings.get('critic-message', 'disablemodule') && chatMessage.isRoll ) { 
-
+        
         detectroll(chatMessage);
     }
 
@@ -29,6 +33,14 @@ Hooks.on('diceSoNiceRollComplete', (data) => {
     } 
 
     detectroll(chatMessage);
+});
+
+
+Hooks.on('midi-qol.postAttackRollComplete', (data) => {
+
+    console.log(data);
+    //console.log(data.chatCard.rolls[0]);
+    detectroll(data.chatCard);
 });
 /****************************************************************************** */
 

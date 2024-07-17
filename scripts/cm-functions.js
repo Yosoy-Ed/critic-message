@@ -93,7 +93,7 @@ export function criticalmessage(d20dices, userwhorolled,isAttack) {
 }
 
 export function detectroll(chatMessage) {
-
+    
     let gameSystem = game.system.id;
     let foundryV11 = game.version < 12 ? true : false;
     let msgId = game.version < 12 ? chatMessage.user._id : chatMessage.author._id;
@@ -105,14 +105,15 @@ export function detectroll(chatMessage) {
 
     let isAttack = false;
 
-    if (gameSystem === 'dnd5e' && chatMessage.rolls[0].options.flavor.includes('Attack')){
+    if (gameSystem === 'dnd5e' && chatMessage.rolls[0].options.flavor !== undefined  && chatMessage.rolls[0].options.flavor.includes('Attack')){
+
         isAttack = true;        
     }
 
     if (gameSystem === 'pf2e' && chatMessage.rolls[0]['type'] === 'attack-roll') {
         isAttack = true;
     }
-
+    
     let rolltype = 0; // 0-Public, 1-Blind , 2-PrivateGM, 3-Self
 
     // If the roll is not public it is whisper 
