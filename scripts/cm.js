@@ -1,5 +1,5 @@
 import { Updatetxtarraysn1, Updatetxtarraysn20, ResetButton, ResetButton1, ResetButtonAll } from './cm-classes.js';
-import { verifyimgfolders, criticalmessage, detectroll } from './cm-functions.js';
+import { verifyimgfolders, natcounter, detectroll } from './cm-functions.js';
 
 /************************************************** CHAT DICE HOOKS ***********/
 // If dice so nice is not active    
@@ -239,6 +239,28 @@ Hooks.once('init', function () {
         type: ResetButton,
         restricted: true,
     });
+
+    //Checkbox to enable single chat card when muliple d20s are rolled
+    game.settings.register('critic-message', 'single-on-multidice', {
+        name: 'Single card for multiple results',
+        hint: 'When enabled, a single chat card will be shown for repeating critical dices',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: false,
+        restricted: true
+    });  //game.settings.get('critic-message', 'single-on-multidice'); // true
+
+    //Checkbox to enable single chat card when muliple d20s are rolled
+    game.settings.register('critic-message', 'advantage-disadvantage', {
+        name: 'Advantage - Disadvantage',
+        hint: 'Use advantage or disadvantage logic to show only relevant dice (kh and kl). Ignores "Single card for multiple results" setting',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: false,
+        restricted: true
+    });  //game.settings.get('critic-message', 'advantage-disadvantage'); // false
 });
 
 Hooks.once('ready', function () {
